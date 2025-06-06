@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginProfe } from '../services/authService';
+import { loginProfe, loginEstudiante } from '../services/authService';
 
 const PostitPattern = () => (
   <div
@@ -92,10 +92,12 @@ const Login = () => {
       if (usuario === "admin" && password === "Developer2304") {
         // Login admin
         await loginProfe("zapataval2304@gmail.com", password);
-        localStorage.setItem("role", "admin"); // <-- Guarda el rol
+        localStorage.setItem("role", "admin");
         redirectUrl = "/panel";
-      } else if (usuario === "estudiante" && password === "Estudiante2025") {
-        localStorage.setItem("role", "student"); // <-- Guarda el rol estudiante
+      } else if (usuario === "estudiante" && password === "estudiante") {
+        // Login estudiante con usuario/contraseña
+        await loginEstudiante("estudiante@notes.com", password);
+        localStorage.setItem("role", "student");
         redirectUrl = "/vista-estudiante";
       } else {
         throw new Error("Usuario o contraseña incorrectos");

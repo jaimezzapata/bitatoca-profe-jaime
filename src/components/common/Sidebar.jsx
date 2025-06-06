@@ -1,4 +1,4 @@
-import { FiUsers, FiBook, FiLayers, FiTrash2, FiLogOut, FiX } from "react-icons/fi";
+import { FiUsers, FiBook, FiLayers, FiTrash2, FiLogOut, FiX, FiUser } from "react-icons/fi";
 import { signOut } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 import { useState } from "react";
@@ -30,31 +30,52 @@ export default function Sidebar({ open, setOpen }) {
 
   return (
     <>
+      {/* Overlay para móvil */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
       <aside
-        className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform md:translate-x-0 transition-transform duration-200 ease-in-out
-        ${open ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 md:flex`}
+        className={`fixed z-50 inset-y-0 left-0 w-64 bg-gradient-to-b from-blue-50 via-white to-yellow-50 shadow-xl transform transition-transform duration-200 ease-in-out
+        ${open ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 md:flex md:z-0`}
+        style={{ minHeight: '100vh' }}
       >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-4 border-b">
-            <span className="font-bold text-blue-700 text-xl">Bitácora: Profe Jaime</span>
-            <button className="md:hidden" onClick={() => setOpen(false)}>
+        <div className="flex flex-col h-full w-full">
+          {/* Logo y avatar */}
+          <div className="flex items-center justify-between py-4 border-b bg-white/80 w-full">
+            <span className="font-extrabold text-blue-700 text-lg tracking-tight pl-4">Bitácora: Profe Jaime</span>
+            <button className="md:hidden pr-4" onClick={() => setOpen(false)}>
               <FiX size={24} />
             </button>
           </div>
-          <nav className="flex-1 p-2">
+          {/* Avatar usuario */}
+          <div className="flex items-center gap-3 py-3 border-b bg-white/60 w-full pl-4">
+            <div className="bg-blue-200 rounded-full p-2">
+              <FiUser className="text-blue-600" size={20} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-blue-800">Admin/Profe</span>
+              <span className="text-xs text-gray-500">jaime@bitacora.com</span>
+            </div>
+          </div>
+          {/* Menú navegación */}
+          <nav className="flex-1 mt-2 w-full">
             {menu.map((item) => (
               <a
                 key={item.label}
                 href={item.path}
-                className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-100 transition mb-1"
+                className="flex items-center gap-3 pl-6 pr-2 py-3 rounded-lg text-gray-700 font-medium hover:bg-blue-100 hover:scale-[1.03] transition-all duration-150 mb-1 group w-full text-base"
+                style={{ width: '100%' }}
               >
-                {item.icon}
-                <span>{item.label}</span>
+                <span className="text-xl group-hover:text-blue-600 transition-colors">{item.icon}</span>
+                <span className="flex-1">{item.label}</span>
               </a>
             ))}
           </nav>
-          <div className="p-4 border-t">
-            <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 hover:text-red-800 font-semibold">
+          <div className="border-t bg-white/80 w-full">
+            <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 hover:text-red-800 font-semibold w-full justify-center py-4 rounded-lg hover:bg-red-50 transition-colors text-base">
               <FiLogOut />
               Cerrar sesión
             </button>

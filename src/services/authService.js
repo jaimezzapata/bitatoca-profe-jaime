@@ -9,10 +9,7 @@ export const loginProfe = async (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-// Login para estudiante: verifica si la contraseña genérica existe para el grupo
-export const loginEstudiante = async (grupo, password) => {
-  const gruposRef = collection(db, 'grupos');
-  const q = query(gruposRef, where('nombre', '==', grupo), where('password', '==', password));
-  const snapshot = await getDocs(q);
-  return !snapshot.empty; // true si existe el grupo con esa contraseña
+// Login para estudiante: ahora usa Firebase Auth igual que el admin
+export const loginEstudiante = async (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
 };
