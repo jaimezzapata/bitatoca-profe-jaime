@@ -1,0 +1,7 @@
+feat: dashboard admin con sidebar responsive, cierre de sesión con modal UX y rutas protegidas
+
+- Estructura de dashboard tipo panel para admin/profe con menú lateral responsive y menú hamburguesa en móvil.
+- Sidebar con navegación y botón de cierre de sesión.
+- Modal de cierre de sesión con opciones (Home/Login) y diseño moderno.
+- Redirección automática tras login según rol.
+- Mejoras visuales y de experiencia de usuario en panel y autenticación.
