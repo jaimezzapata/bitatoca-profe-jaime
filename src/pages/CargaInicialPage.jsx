@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CreateUsersFirebase from "./CreateUsersFirebase";
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
+import CargaMateriasDemo from "../components/common/CargaMateriasDemo";
+import {
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+} from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../services/firebaseConfig";
 
@@ -35,71 +39,6 @@ const CargaInicialPage = () => {
         usuario: "estudiante",
         email: "estudiante@notes.com",
         name: "Estudiante",
-      },
-    },
-    {
-      email: "regular@notes.com",
-      password: "estudiante1",
-      docId: "estudianteRegular",
-      data: {
-        rol: "student",
-        materias: [],
-        usuario: "regular",
-        email: "regular@notes.com",
-        name: "Estudiante Regular",
-        loginType: "usuario",
-      },
-    },
-    {
-      email: "empresarial@notes.com",
-      password: "estudiante1",
-      docId: "empresarial",
-      data: {
-        rol: "student",
-        materias: [],
-        usuario: "empresarial",
-        email: "empresarial@notes.com",
-        name: "Estudiante Empresarial",
-        loginType: "usuario",
-      },
-    },
-    {
-      email: "front@notes.com",
-      password: "estudiante1",
-      docId: "estudianteFront",
-      data: {
-        rol: "student",
-        materias: [],
-        usuario: "front",
-        email: "front@notes.com",
-        name: "Estudiante Front",
-        loginType: "usuario",
-      },
-    },
-    {
-      email: "back@notes.com",
-      password: "estudiante1",
-      docId: "estudianteBack",
-      data: {
-        rol: "student",
-        materias: [],
-        usuario: "back",
-        email: "back@notes.com",
-        name: "Estudiante Back",
-        loginType: "usuario",
-      },
-    },
-    {
-      email: "full@notes.com",
-      password: "estudiante1",
-      docId: "estudianteFull",
-      data: {
-        rol: "student",
-        materias: [],
-        usuario: "full",
-        email: "full@notes.com",
-        name: "Estudiante Full",
-        loginType: "usuario",
       },
     },
   ];
@@ -152,7 +91,11 @@ const CargaInicialPage = () => {
         const firestoreExists = docSnap.exists();
         if (!authExists) {
           try {
-            await createUserWithEmailAndPassword(auth, user.email, user.password);
+            await createUserWithEmailAndPassword(
+              auth,
+              user.email,
+              user.password
+            );
           } catch (e) {
             if (e.code === "auth/email-already-in-use") {
             } else {
@@ -215,12 +158,28 @@ Usuarios ya existentes: ${skipped.join(", ")}.`
       {/* Botón flotante fijo para ir al panel del admin */}
       <button
         className="fixed bottom-6 right-6 z-50 px-5 py-3 bg-gray-900 text-white rounded-full font-bold shadow-2xl hover:bg-blue-700 transition-colors text-base flex items-center gap-2 animate-fade-in"
-        style={{ boxShadow: '0 4px 24px 0 rgba(31,38,135,0.18)' }}
-        onClick={() => window.location.href = '/panel'}
+        style={{ boxShadow: "0 4px 24px 0 rgba(31,38,135,0.18)" }}
+        onClick={() => (window.location.href = "/panel")}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 014-4h6" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h6m0 0v6m0-6l-8 8" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 17v-2a4 4 0 014-4h6"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7h6m0 0v6m0-6l-8 8"
+          />
         </svg>
         Ir al Panel del Admin
       </button>
@@ -237,7 +196,6 @@ Usuarios ya existentes: ${skipped.join(", ")}.`
               onClick={handleReloadCreate}
               disabled={reloadLoading}
             >
-              {reloadLoading ? "Cargando..." : "Recargar usuarios"}
             </button>
             {reloadMsg && (
               <div className="w-full text-center text-blue-700 font-medium text-xs mt-1 bg-blue-100 rounded p-1 border border-blue-200 animate-fade-in">
@@ -247,25 +205,32 @@ Usuarios ya existentes: ${skipped.join(", ")}.`
           </div>
           {/* Materias */}
           <div className="flex flex-col items-center gap-2 w-full bg-green-50 rounded-lg p-4 border border-green-100 shadow-sm md:min-h-[100px] min-h-[120px] justify-center">
-            {/* <CargarMaterias /> */}
             <span className="text-green-700 font-semibold text-base">Cargar Materias</span>
-            <button className="px-3 py-2 bg-green-600 text-white rounded font-semibold shadow-sm hover:bg-green-700 transition-colors text-sm mt-2 opacity-60 cursor-not-allowed" disabled>
-              Próximamente
-            </button>
+            <CargaMateriasDemo />
           </div>
           {/* Temas */}
           <div className="flex flex-col items-center gap-2 w-full bg-yellow-50 rounded-lg p-4 border border-yellow-100 shadow-sm md:min-h-[100px] min-h-[120px] justify-center">
             {/* <CargarTemas /> */}
-            <span className="text-yellow-700 font-semibold text-base">Cargar Temas</span>
-            <button className="px-3 py-2 bg-yellow-500 text-white rounded font-semibold shadow-sm hover:bg-yellow-600 transition-colors text-sm mt-2 opacity-60 cursor-not-allowed" disabled>
+            <span className="text-yellow-700 font-semibold text-base">
+              Cargar Temas
+            </span>
+            <button
+              className="px-3 py-2 bg-yellow-500 text-white rounded font-semibold shadow-sm hover:bg-yellow-600 transition-colors text-sm mt-2 opacity-60 cursor-not-allowed"
+              disabled
+            >
               Próximamente
             </button>
           </div>
           {/* Limpiar colecciones y notas */}
           <div className="flex flex-col items-center gap-2 w-full bg-red-50 rounded-lg p-4 border border-red-100 shadow-sm min-h-[120px] justify-center md:col-span-3 xl:col-span-1">
             {/* <LimpiarFirebase /> */}
-            <span className="text-red-700 font-semibold text-base">Limpiar Colecciones y Notas</span>
-            <button className="px-3 py-2 bg-red-600 text-white rounded font-semibold shadow-sm hover:bg-red-700 transition-colors text-sm mt-2 opacity-60 cursor-not-allowed" disabled>
+            <span className="text-red-700 font-semibold text-base">
+              Limpiar Colecciones y Notas
+            </span>
+            <button
+              className="px-3 py-2 bg-red-600 text-white rounded font-semibold shadow-sm hover:bg-red-700 transition-colors text-sm mt-2 opacity-60 cursor-not-allowed"
+              disabled
+            >
               Próximamente
             </button>
           </div>

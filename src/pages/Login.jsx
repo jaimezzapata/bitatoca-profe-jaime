@@ -94,13 +94,13 @@ const Login = () => {
         await loginProfe("zapataval2304@gmail.com", password);
         localStorage.setItem("role", "admin");
         redirectUrl = "/panel";
-      } else if (usuario === "estudiante" && password === "estudiante") {
-        // Login estudiante con usuario/contraseña
-        await loginEstudiante("estudiante@notes.com", password);
+      } else {
+        // Login estudiante: permite usuarioId como login
+        let email = usuario;
+        if (!email.includes("@")) email = usuario + "@bitacora.com";
+        await loginEstudiante(email, password);
         localStorage.setItem("role", "student");
         redirectUrl = "/vista-estudiante";
-      } else {
-        throw new Error("Usuario o contraseña incorrectos");
       }
       window.location.href = redirectUrl;
     } catch (err) {
